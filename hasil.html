@@ -14,35 +14,66 @@
           <h1 id="result-page-title">Hasil Pengukuran Pemahaman</h1>
           <p class="lede" id="result-page-date">Memuat data hasil peserta.</p>
         </div>
-        <a class="page-link" href="./index.html">Form Peserta</a>
+        <nav class="page-actions" aria-label="Navigasi halaman">
+          <a class="page-link icon-link" href="./index.html" aria-label="Form peserta">
+            <span class="form-icon" aria-hidden="true"></span>
+          </a>
+          <a class="page-link page-link-accent icon-link" href="./leaderboard.html" aria-label="Leaderboard">
+            <span class="leaderboard-icon" aria-hidden="true">
+              <i></i>
+              <i></i>
+              <i></i>
+            </span>
+          </a>
+        </nav>
       </section>
 
       <section class="metric-grid" aria-label="Ringkasan hasil">
-        <article class="metric-card">
+        <article class="metric-card metric-card-participants">
           <span>Total Peserta</span>
-          <strong id="metric-participants">0</strong>
+          <div class="split-metric">
+            <p><small>Awal</small><strong id="metric-participants-pre">0</strong></p>
+            <p><small>Akhir</small><strong id="metric-participants-post">0</strong></p>
+          </div>
         </article>
-        <article class="metric-card">
+        <article class="metric-card metric-card-average">
           <span>Rata-rata Poin</span>
-          <strong id="metric-average">0</strong>
+          <div class="split-metric">
+            <p><small>Awal</small><strong id="metric-average-pre">0</strong></p>
+            <p><small>Akhir</small><strong id="metric-average-post">0</strong></p>
+          </div>
         </article>
-        <article class="metric-card">
+        <article class="metric-card metric-card-highest">
           <span>Poin Tertinggi</span>
-          <strong id="metric-highest">0</strong>
+          <div class="split-metric">
+            <p><small>Awal</small><strong id="metric-highest-pre">0</strong></p>
+            <p><small>Akhir</small><strong id="metric-highest-post">0</strong></p>
+          </div>
         </article>
-        <article class="metric-card">
+        <article class="metric-card metric-card-duration">
           <span>Rata-rata Waktu</span>
-          <strong id="metric-duration">0 detik</strong>
+          <div class="split-metric">
+            <p><small>Awal</small><strong id="metric-duration-pre">0 detik</strong></p>
+            <p><small>Akhir</small><strong id="metric-duration-post">0 detik</strong></p>
+          </div>
         </article>
       </section>
 
-      <section class="panel result-dashboard" aria-labelledby="dashboard-title">
-        <div class="dashboard-head">
+      <section class="panel filter-panel" aria-labelledby="filter-title">
+        <div class="dashboard-head compact-head">
           <div class="section-heading">
-            <span class="section-number">Hasil</span>
-            <h2 id="dashboard-title">Daftar Peserta</h2>
+            <span class="section-number">Filter</span>
+            <h2 id="filter-title">Periode Data</h2>
           </div>
           <div class="dashboard-controls">
+            <label>
+              <span>Dari tanggal</span>
+              <input id="filter-date-start" type="date" />
+            </label>
+            <label>
+              <span>Sampai tanggal</span>
+              <input id="filter-date-end" type="date" />
+            </label>
             <label>
               <span>Sesi</span>
               <select id="filter-session">
@@ -56,6 +87,30 @@
               </select>
             </label>
             <button class="secondary" id="refresh-results" type="button">Segarkan</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel comparison-panel" aria-labelledby="comparison-title">
+        <div class="section-heading">
+          <span class="section-number">Perbandingan</span>
+          <h2 id="comparison-title">Keberhasilan Proses Literasi</h2>
+        </div>
+        <div class="comparison-legend" aria-label="Keterangan grafik">
+          <span><i class="legend-pre"></i> Awal sesi</span>
+          <span><i class="legend-post"></i> Setelah literasi</span>
+        </div>
+        <div id="comparison-empty" class="empty-state hidden">
+          Perbandingan akan muncul setelah ada data Absensi dan Feedback pada tanggal serta tema yang sama.
+        </div>
+        <div id="comparison-chart" class="comparison-chart"></div>
+      </section>
+
+      <section class="panel result-dashboard" aria-labelledby="dashboard-title">
+        <div class="dashboard-head">
+          <div class="section-heading">
+            <span class="section-number">Hasil</span>
+            <h2 id="dashboard-title">Daftar Peserta</h2>
           </div>
         </div>
 

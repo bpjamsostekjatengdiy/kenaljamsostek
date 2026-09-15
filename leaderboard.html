@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard Pemahaman Program</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="leaderboard-body">
+    <main class="leaderboard-shell">
+      <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
+
+      <section class="leaderboard-hero" aria-labelledby="leaderboard-title">
+        <div>
+          <p class="eyebrow">Leaderboard</p>
+          <h1 id="leaderboard-title">Pemenang Sesi Literasi</h1>
+          <p class="lede" id="leaderboard-subtitle">Memuat peringkat peserta terbaik.</p>
+        </div>
+        <nav class="page-actions" aria-label="Navigasi halaman">
+          <a class="page-link icon-link" href="./hasil.html" aria-label="Dashboard hasil">
+            <span class="dashboard-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </a>
+          <a class="page-link page-link-accent icon-link" href="./index.html" aria-label="Form peserta">
+            <span class="form-icon" aria-hidden="true"></span>
+          </a>
+        </nav>
+      </section>
+
+      <section class="podium" id="podium" aria-label="Tiga peringkat teratas"></section>
+
+      <section class="leaderboard-card" aria-labelledby="rank-title">
+        <div class="section-heading">
+          <span class="section-number">Top 10</span>
+          <h2 id="rank-title">Skor Tertinggi dan Waktu Tercepat</h2>
+        </div>
+        <div id="leaderboard-empty" class="empty-state hidden">
+          Belum ada data Feedback pada tanggal terakhir.
+        </div>
+        <ol class="rank-list" id="rank-list"></ol>
+      </section>
+
+      <div id="message" class="message hidden" role="status"></div>
+    </main>
+
+    <script src="./leaderboard.js"></script>
+  </body>
+</html>
