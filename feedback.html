@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Belajar Bersama Pemahaman Program</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="intro" aria-labelledby="app-title">
+        <div>
+          <div class="module-title-row">
+            <a class="dashboard-link" href="./hasil.html" aria-label="Buka hasil pengukuran">
+              <span class="dashboard-icon" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </a>
+            <p class="eyebrow" id="active-module-label">Memuat modul...</p>
+          </div>
+          <h1 id="app-title">Yuk Kenali dan pahami Program kami</h1>
+          <p class="lede" id="session-date">Sesi DIJAMIN</p>
+          <p class="lede followup-copy">
+            Setelah mengikuti sesi literasi, yuk kita coba untuk mengisi feedback berikut
+          </p>
+        </div>
+      </section>
+
+      <section class="panel" id="participant-panel" aria-labelledby="participant-title">
+        <div class="section-heading">
+          <span class="section-number">Bagian 1</span>
+          <h2 id="participant-title">Informasi Peserta</h2>
+        </div>
+
+        <form id="participant-form" class="participant-form">
+          <div class="field-grid">
+            <label>
+              <span>Nama lengkap <strong>*</strong></span>
+              <input id="full-name" name="fullName" type="text" autocomplete="name" required />
+            </label>
+
+            <label>
+              <span>Nomor WA <strong>*</strong></span>
+              <input
+                id="whatsapp-number"
+                name="whatsappNumber"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                required
+              />
+            </label>
+
+            <label>
+              <span>Nama Perusahaan <em>(optional)</em></span>
+              <input id="company-name" name="companyName" type="text" autocomplete="organization" />
+            </label>
+
+            <label>
+              <span>Kota Domisili <strong>*</strong></span>
+              <input id="domicile" name="domicile" type="text" autocomplete="address-level2" required />
+            </label>
+
+            <label>
+              <span>Sesi <strong>*</strong></span>
+              <select id="test-session" name="testSession" required disabled>
+                <option value="">Pilih sesi</option>
+                <option value="Absensi">Absensi</option>
+                <option value="Feedback" selected>Feedback</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Tema <strong>*</strong></span>
+              <select id="test-theme" name="testTheme" required>
+                <option value="">Memuat tema...</option>
+              </select>
+            </label>
+          </div>
+
+          <button id="start-button" type="submit">Yuk Mulai</button>
+        </form>
+
+        <p id="bank-status" class="hint">Bahan pemahaman sedang dimuat.</p>
+      </section>
+
+      <section class="panel hidden" id="quiz-panel" aria-live="polite">
+        <div class="section-heading">
+          <span class="section-number">Bagian 2</span>
+          <h2>Bahan Pemahaman</h2>
+        </div>
+
+        <div class="quiz-topline">
+          <div>
+            <span id="question-count">Butir 1 dari 1</span>
+            <p id="question-module" class="module-name"></p>
+          </div>
+          <div class="timer-box" aria-live="polite">
+            <span>Lama pengerjaan</span>
+            <strong id="timer-display">00:00</strong>
+          </div>
+          <button class="ghost" id="restart-button" type="button">Mulai Ulang</button>
+        </div>
+
+        <form id="quiz-form">
+          <fieldset>
+            <legend id="question-text"></legend>
+            <div id="answer-options" class="options"></div>
+          </fieldset>
+
+          <div class="actions">
+            <button class="secondary" id="back-button" type="button">Sebelumnya</button>
+            <button id="next-button" type="submit">Lanjut</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel hidden" id="confirm-panel" aria-live="polite">
+        <div class="section-heading">
+          <span class="section-number">Konfirmasi</span>
+          <h2>Ringkasan Tanggapan</h2>
+        </div>
+        <ol id="answer-checklist" class="answer-checklist"></ol>
+        <div class="actions">
+          <button class="secondary" id="back-to-quiz-button" type="button">Tinjau Lagi</button>
+          <button id="submit-answers-button" type="button">Kirim Refleksi</button>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="result-panel" aria-live="polite">
+        <div class="result-head">
+          <p class="eyebrow">Ringkasan pemahaman</p>
+          <h2 id="result-title">Hasil Anda</h2>
+          <div id="participant-summary" class="participant-summary"></div>
+          <p id="result-summary"></p>
+          <p id="duration-summary" class="duration-summary"></p>
+          <p id="submit-status" class="submit-status"></p>
+        </div>
+        <div id="review-list" class="review-list"></div>
+        <button id="close-button" type="button">Close</button>
+      </section>
+
+      <div id="message" class="message hidden" role="status"></div>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

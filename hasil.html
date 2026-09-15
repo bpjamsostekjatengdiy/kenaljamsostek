@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hasil Pengukuran Pemahaman</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="shell result-page">
+      <section class="intro" aria-labelledby="result-page-title">
+        <div>
+          <p class="eyebrow">Rekap Pemahaman</p>
+          <h1 id="result-page-title">Hasil Pengukuran Pemahaman</h1>
+          <p class="lede" id="result-page-date">Memuat data hasil peserta.</p>
+        </div>
+        <a class="page-link" href="./index.html">Form Peserta</a>
+      </section>
+
+      <section class="metric-grid" aria-label="Ringkasan hasil">
+        <article class="metric-card">
+          <span>Total Peserta</span>
+          <strong id="metric-participants">0</strong>
+        </article>
+        <article class="metric-card">
+          <span>Rata-rata Poin</span>
+          <strong id="metric-average">0</strong>
+        </article>
+        <article class="metric-card">
+          <span>Poin Tertinggi</span>
+          <strong id="metric-highest">0</strong>
+        </article>
+        <article class="metric-card">
+          <span>Rata-rata Waktu</span>
+          <strong id="metric-duration">0 detik</strong>
+        </article>
+      </section>
+
+      <section class="panel result-dashboard" aria-labelledby="dashboard-title">
+        <div class="dashboard-head">
+          <div class="section-heading">
+            <span class="section-number">Hasil</span>
+            <h2 id="dashboard-title">Daftar Peserta</h2>
+          </div>
+          <div class="dashboard-controls">
+            <label>
+              <span>Sesi</span>
+              <select id="filter-session">
+                <option value="">Semua sesi</option>
+              </select>
+            </label>
+            <label>
+              <span>Tema</span>
+              <select id="filter-theme">
+                <option value="">Semua tema</option>
+              </select>
+            </label>
+            <button class="secondary" id="refresh-results" type="button">Segarkan</button>
+          </div>
+        </div>
+
+        <div id="result-empty" class="empty-state hidden">
+          Belum ada data hasil yang bisa ditampilkan.
+        </div>
+
+        <div class="table-wrap results-table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Waktu</th>
+                <th>Nama</th>
+                <th>Kota</th>
+                <th>Sesi</th>
+                <th>Tema</th>
+                <th>Poin</th>
+                <th>Sesuai</th>
+                <th>Lama</th>
+              </tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <div id="message" class="message hidden" role="status"></div>
+    </main>
+
+    <script src="./hasil.js"></script>
+  </body>
+</html>
