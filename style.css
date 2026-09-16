@@ -106,9 +106,18 @@ a.page-link-accent:hover {
 }
 
 .icon-link {
-  width: 36px;
+  width: auto;
   min-height: 36px;
-  padding: 0;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 0 10px;
+}
+
+.nav-label {
+  color: inherit;
+  font-size: 0.78rem;
+  font-weight: 850;
+  line-height: 1;
 }
 
 .form-icon {
@@ -199,7 +208,7 @@ a.page-link-accent:hover {
 
 .certificate-controls {
   display: grid;
-  grid-template-columns: 1fr minmax(280px, 380px) auto;
+  grid-template-columns: 1fr minmax(280px, 380px);
   gap: 18px;
   align-items: end;
   margin-bottom: 18px;
@@ -216,6 +225,16 @@ a.page-link-accent:hover {
   color: var(--muted);
   font-size: 0.82rem;
   font-weight: 850;
+}
+
+.certificate-event-info {
+  border-left: 4px solid var(--primary);
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.35;
+  margin: 0;
+  padding: 4px 0 4px 10px;
 }
 
 .certificate-status {
@@ -321,6 +340,16 @@ a.page-link-accent:hover {
 }
 
 @media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
   body {
     background: #ffffff;
   }
@@ -341,8 +370,8 @@ a.page-link-accent:hover {
   }
 
   .certificate-canvas {
-    width: 100vw;
-    height: 100vh;
+    width: 297mm;
+    height: 210mm;
     border: 0;
     box-shadow: none;
   }
@@ -1176,6 +1205,46 @@ legend {
   color: white;
   box-shadow: var(--shadow);
   padding: 14px 16px;
+}
+
+.login-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+}
+
+.login-shell {
+  width: min(100% - 2rem, 460px);
+}
+
+.login-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+.login-card h1 {
+  font-size: clamp(2rem, 7vw, 3.5rem);
+}
+
+.login-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.login-form label span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 850;
+}
+
+.login-form input {
+  width: 100%;
 }
 
 .leaderboard-body {

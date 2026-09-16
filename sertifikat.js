@@ -6,6 +6,7 @@ const CERTIFICATE_RESPONSE_ENDPOINT_URL =
 const elements = {
   form: document.querySelector("#certificate-form"),
   phone: document.querySelector("#certificate-phone"),
+  eventInfo: document.querySelector("#certificate-event-info"),
   stage: document.querySelector("#certificate-stage"),
   name: document.querySelector("#certificate-name"),
   episode: document.querySelector("#certificate-episode"),
@@ -44,6 +45,7 @@ async function loadCertificateData() {
   }
 
   episodeRows = episodes.status === "fulfilled" ? episodes.value : [];
+  renderEventInfo();
 }
 
 async function generateCertificate() {
@@ -181,6 +183,13 @@ function findEpisodeForDate(dateKey) {
     episode.nama_modul ||
     ""
   );
+}
+
+function renderEventInfo() {
+  const today = new Date();
+  const todayKey = getDateKey(today);
+  const episode = findEpisodeForDate(todayKey) || "Episode belum tersedia";
+  elements.eventInfo.textContent = `Kegiatan DIJAMIN : ${episode} tanggal ${formatLongDate(today)}`;
 }
 
 function normalizeDateText(value) {

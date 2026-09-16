@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verifikasi Akses</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="login-page">
+    <main class="login-shell">
+      <section class="login-card" aria-labelledby="login-title">
+        <p class="eyebrow">Verifikasi</p>
+        <h1 id="login-title">Masuk Dashboard</h1>
+        <p class="lede">Masukkan key akses untuk membuka halaman hasil dan leaderboard.</p>
+
+        <form id="login-form" class="login-form">
+          <label>
+            <span>Key</span>
+            <input id="access-key" type="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit">Masuk</button>
+          <p id="login-status" class="certificate-status hidden"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="./auth.js"></script>
+  </body>
+</html>
