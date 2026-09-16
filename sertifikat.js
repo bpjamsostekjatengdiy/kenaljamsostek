@@ -122,7 +122,15 @@ function getLateFeedbackMessage() {
   return "Anda terdeteksi melakukan pengisian feedback setelah kegiatan berakhir, sehingga tidak bisa cetak sertifikat.\n\nNantikan episode DIJAMIN berikutnya. Terima kasih";
 }
 
+function getClosedFeedbackMessage() {
+  return "Tidak bisa mencetak sertifikat dan mengisi feedback karena kegiatan sudah selesai.\n\nNantikan episode DIJAMIN berikutnya.\n\nTerima kasih";
+}
+
 function getMissingFeedbackMessage(phone, dateKey) {
+  if (isAfterDailyCutoff(new Date())) {
+    return getClosedFeedbackMessage();
+  }
+
   const samePhoneRows = responseRows.filter(
     (row) => normalizePhone(row.nomor_wa || row.whatsappNumber) === phone,
   );
@@ -144,6 +152,12 @@ function getMissingFeedbackMessage(phone, dateKey) {
   }
 
   return "Data feedback hari ini untuk nomor HP tersebut belum ditemukan.";
+}
+
+function isAfterDailyCutoff(date) {
+  const cutoff = new Date(date);
+  cutoff.setHours(12, 0, 0, 0);
+  return date >= cutoff;
 }
 
 function showCertificateStatus(text) {
