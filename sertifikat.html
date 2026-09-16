@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sertifikat Kegiatan</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="certificate-page">
+    <main class="certificate-shell">
+      <section class="certificate-controls" aria-labelledby="certificate-title">
+        <div>
+          <p class="eyebrow">Sertifikat</p>
+          <h1 id="certificate-title">Generate Sertifikat Kegiatan</h1>
+          <p class="lede">
+            Masukkan nomor HP yang digunakan saat mengisi feedback hari ini.
+          </p>
+        </div>
+        <form id="certificate-form" class="certificate-form">
+          <label>
+            <span>Nomor HP</span>
+            <input id="certificate-phone" type="tel" inputmode="tel" placeholder="08xxxxxxxxxx" required />
+          </label>
+          <button type="submit">Tampilkan Sertifikat</button>
+          <p id="certificate-status" class="certificate-status hidden"></p>
+        </form>
+        <nav class="page-actions certificate-nav" aria-label="Navigasi halaman">
+          <a class="page-link icon-link" href="./hasil.html" aria-label="Dashboard hasil">
+            <span class="dashboard-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </a>
+          <a class="page-link page-link-accent icon-link" href="./leaderboard.html" aria-label="Leaderboard">
+            <span class="leaderboard-icon" aria-hidden="true">
+              <i></i>
+              <i></i>
+              <i></i>
+            </span>
+          </a>
+        </nav>
+      </section>
+
+      <section class="certificate-stage hidden" id="certificate-stage" aria-label="Preview sertifikat">
+        <article class="certificate-canvas" id="certificate-canvas">
+          <p class="certificate-name" id="certificate-name">Nama Peserta</p>
+          <p class="certificate-episode" id="certificate-episode">
+            "Topik kegiatan akan tampil di sini"
+          </p>
+          <p class="certificate-date">
+            Semarang, <span id="certificate-date">16 September 2026</span>
+          </p>
+          <p class="certificate-serial" id="certificate-serial">SERIAL: -</p>
+        </article>
+
+        <div class="certificate-actions">
+          <button id="print-certificate" type="button">Cetak / Simpan PDF</button>
+        </div>
+      </section>
+
+      <div id="message" class="message hidden" role="status"></div>
+    </main>
+
+    <script src="./sertifikat.js"></script>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 const LEADERBOARD_ENDPOINT_URL =
-  "https://script.google.com/macros/s/AKfycbzH23eWrhkBizk52Qd29TEngdPxx0Sh-9-WwxwSu31A6ZwuKegVjCnnbgAhdZxVOuMMSg/exec";
+  "https://script.google.com/macros/s/AKfycbxMP8hBDJ_B41D74NHaY_Q97PwV23UVfvli_XQH629ZO6sbIjgyfDbORQFkXJcZq00U/exec";
 
 const elements = {
   subtitle: document.querySelector("#leaderboard-subtitle"),
@@ -68,7 +68,7 @@ function renderLeaderboard(winners, latestDate) {
   elements.podium.innerHTML = "";
   elements.rankList.innerHTML = "";
 
-  winners.slice(0, 3).forEach((winner, index) => {
+  winners.slice(0, 1).forEach((winner, index) => {
     const card = document.createElement("article");
     card.className = `podium-card rank-${index + 1}`;
     card.innerHTML = `

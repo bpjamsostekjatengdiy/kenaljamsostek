@@ -1,9 +1,14 @@
 const RESULTS_ENDPOINT_URL =
-  "https://script.google.com/macros/s/AKfycbzH23eWrhkBizk52Qd29TEngdPxx0Sh-9-WwxwSu31A6ZwuKegVjCnnbgAhdZxVOuMMSg/exec";
+  "https://script.google.com/macros/s/AKfycbxMP8hBDJ_B41D74NHaY_Q97PwV23UVfvli_XQH629ZO6sbIjgyfDbORQFkXJcZq00U/exec";
 
 const state = {
   rows: [],
   filteredRows: [],
+  sortedRows: [],
+  currentPage: 1,
+  rowsPerPage: 10,
+  sortKey: "timestamp",
+  sortDirection: "desc",
 };
 
 const elements = {
@@ -25,6 +30,10 @@ const elements = {
   comparisonChart: document.querySelector("#comparison-chart"),
   resultEmpty: document.querySelector("#result-empty"),
   resultsBody: document.querySelector("#results-body"),
+  paginationInfo: document.querySelector("#pagination-info"),
+  prevPage: document.querySelector("#prev-page"),
+  nextPage: document.querySelector("#next-page"),
+  sortButtons: document.querySelectorAll(".sort-button"),
   message: document.querySelector("#message"),
 };
 
@@ -38,6 +47,35 @@ elements.filterDateStart.addEventListener("change", applyFilters);
 elements.filterDateEnd.addEventListener("change", applyFilters);
 elements.filterSession.addEventListener("change", applyFilters);
 elements.filterTheme.addEventListener("change", applyFilters);
+elements.prevPage.addEventListener("click", () => {
+  if (state.currentPage > 1) {
+    state.currentPage -= 1;
+    renderRows();
+  }
+});
+elements.nextPage.addEventListener("click", () => {
+  const totalPages = getTotalPages();
+
+  if (state.currentPage < totalPages) {
+    state.currentPage += 1;
+    renderRows();
+  }
+});
+elements.sortButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const nextKey = button.dataset.sort;
+
+    if (state.sortKey === nextKey) {
+      state.sortDirection = state.sortDirection === "asc" ? "desc" : "asc";
+    } else {
+      state.sortKey = nextKey;
+      state.sortDirection = getDefaultSortDirection(nextKey);
+    }
+
+    state.currentPage = 1;
+    renderRows();
+  });
+});
 
 async function loadResults() {
   setLoading(true);
@@ -60,9 +98,10 @@ async function loadResults() {
   } catch (error) {
     state.rows = [];
     state.filteredRows = [];
+    state.sortedRows = [];
     renderMetrics([]);
     renderComparison([]);
-    renderRows([]);
+    renderRows();
     showMessage(
       "Data hasil belum bisa dibaca. Pastikan Apps Script sudah diperbarui dan deploy ulang.",
     );
@@ -144,7 +183,8 @@ function applyFilters() {
 
   renderMetrics(state.filteredRows);
   renderComparison(getComparisonRows());
-  renderRows(state.filteredRows);
+  state.currentPage = 1;
+  renderRows();
 }
 
 function getComparisonRows() {
@@ -290,14 +330,15 @@ function buildComparisonGroups(rows) {
     });
 }
 
-function renderRows(rows) {
+function renderRows() {
+  state.sortedRows = sortRows(state.filteredRows);
+  const rows = getPaginatedRows();
   elements.resultsBody.innerHTML = "";
-  elements.resultEmpty.classList.toggle("hidden", rows.length > 0);
+  elements.resultEmpty.classList.toggle("hidden", state.filteredRows.length > 0);
+  updateSortButtons();
+  updatePagination();
 
-  rows
-    .slice()
-    .sort((first, second) => new Date(second.timestamp) - new Date(first.timestamp))
-    .forEach((row) => {
+  rows.forEach((row) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${escapeHtml(formatDateTime(row.timestamp))}</td>
@@ -305,6 +346,7 @@ function renderRows(rows) {
           <strong>${escapeHtml(row.name)}</strong>
           <span>${escapeHtml(row.company || "-")}</span>
         </td>
+        <td>${escapeHtml(formatPhone(row.whatsapp))}</td>
         <td>${escapeHtml(row.domicile || "-")}</td>
         <td>${escapeHtml(row.session || "-")}</td>
         <td>${escapeHtml(row.theme || "-")}</td>
@@ -314,6 +356,68 @@ function renderRows(rows) {
       `;
       elements.resultsBody.append(tr);
     });
+}
+
+function sortRows(rows) {
+  return rows.slice().sort((first, second) => {
+    const firstValue = getSortValue(first, state.sortKey);
+    const secondValue = getSortValue(second, state.sortKey);
+    const direction = state.sortDirection === "asc" ? 1 : -1;
+
+    if (typeof firstValue === "number" && typeof secondValue === "number") {
+      return (firstValue - secondValue) * direction;
+    }
+
+    return String(firstValue).localeCompare(String(secondValue), "id", {
+      numeric: true,
+      sensitivity: "base",
+    }) * direction;
+  });
+}
+
+function getSortValue(row, key) {
+  if (key === "timestamp") {
+    return new Date(row.timestamp).getTime() || 0;
+  }
+
+  if (key === "whatsapp") {
+    return formatPhone(row.whatsapp);
+  }
+
+  return row[key] ?? "";
+}
+
+function getPaginatedRows() {
+  const start = (state.currentPage - 1) * state.rowsPerPage;
+  return state.sortedRows.slice(start, start + state.rowsPerPage);
+}
+
+function getTotalPages() {
+  return Math.max(1, Math.ceil(state.filteredRows.length / state.rowsPerPage));
+}
+
+function updatePagination() {
+  const totalRows = state.filteredRows.length;
+  const totalPages = getTotalPages();
+  const start = totalRows === 0 ? 0 : (state.currentPage - 1) * state.rowsPerPage + 1;
+  const end = Math.min(state.currentPage * state.rowsPerPage, totalRows);
+
+  elements.paginationInfo.textContent =
+    totalRows === 0 ? "0 data" : `${start}-${end} dari ${totalRows} data`;
+  elements.prevPage.disabled = state.currentPage <= 1;
+  elements.nextPage.disabled = state.currentPage >= totalPages;
+}
+
+function updateSortButtons() {
+  elements.sortButtons.forEach((button) => {
+    const isActive = button.dataset.sort === state.sortKey;
+    button.classList.toggle("active", isActive);
+    button.dataset.direction = isActive ? state.sortDirection : "";
+  });
+}
+
+function getDefaultSortDirection(key) {
+  return ["timestamp", "score", "correct", "durationSeconds"].includes(key) ? "desc" : "asc";
 }
 
 function setLoading(isLoading) {
@@ -435,6 +539,24 @@ function formatDuration(totalSeconds) {
   }
 
   return `${minutes} menit ${seconds} detik`;
+}
+
+function formatPhone(value) {
+  const digits = String(value || "").replace(/\D/g, "");
+
+  if (!digits) {
+    return "-";
+  }
+
+  if (digits.startsWith("62")) {
+    return `0${digits.slice(2)}`;
+  }
+
+  if (digits.startsWith("8")) {
+    return `0${digits}`;
+  }
+
+  return digits;
 }
 
 function showMessage(text) {

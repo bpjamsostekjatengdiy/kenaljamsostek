@@ -25,6 +25,9 @@
               <i></i>
             </span>
           </a>
+          <a class="page-link icon-link" href="./sertifikat.html" aria-label="Sertifikat">
+            <span class="certificate-icon" aria-hidden="true"></span>
+          </a>
         </nav>
       </section>
 
@@ -122,18 +125,26 @@
           <table class="results-table">
             <thead>
               <tr>
-                <th>Waktu</th>
-                <th>Nama</th>
-                <th>Kota</th>
-                <th>Sesi</th>
-                <th>Tema</th>
-                <th>Poin</th>
-                <th>Sesuai</th>
-                <th>Lama</th>
+                <th><button class="sort-button" type="button" data-sort="timestamp">Waktu</button></th>
+                <th><button class="sort-button" type="button" data-sort="name">Nama</button></th>
+                <th><button class="sort-button" type="button" data-sort="whatsapp">Nomor HP</button></th>
+                <th><button class="sort-button" type="button" data-sort="domicile">Kota</button></th>
+                <th><button class="sort-button" type="button" data-sort="session">Sesi</button></th>
+                <th><button class="sort-button" type="button" data-sort="theme">Tema</button></th>
+                <th><button class="sort-button" type="button" data-sort="score">Poin</button></th>
+                <th><button class="sort-button" type="button" data-sort="correct">Sesuai</button></th>
+                <th><button class="sort-button" type="button" data-sort="durationSeconds">Lama</button></th>
               </tr>
             </thead>
             <tbody id="results-body"></tbody>
           </table>
+        </div>
+        <div class="pagination-bar" id="pagination-bar">
+          <span id="pagination-info">0 data</span>
+          <div class="pagination-actions">
+            <button class="secondary" id="prev-page" type="button">Sebelumnya</button>
+            <button class="secondary" id="next-page" type="button">Berikutnya</button>
+          </div>
         </div>
       </section>
 

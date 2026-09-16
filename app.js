@@ -1,7 +1,7 @@
 const DEFAULT_SPREADSHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vStpYviM6z4JWn4dPGAHHYDOJCBtICdIshwoqeSWqAhlMrZPbxN_n6BrU6eit2qzHOFCt_vHfr57-C7/pubhtml?gid=0&single=true";
 const RESPONSE_ENDPOINT_URL =
-  "https://script.google.com/macros/s/AKfycbzH23eWrhkBizk52Qd29TEngdPxx0Sh-9-WwxwSu31A6ZwuKegVjCnnbgAhdZxVOuMMSg/exec";
+  "https://script.google.com/macros/s/AKfycbxMP8hBDJ_B41D74NHaY_Q97PwV23UVfvli_XQH629ZO6sbIjgyfDbORQFkXJcZq00U/exec";
 const MAX_ACTIVE_QUESTIONS = 10;
 
 const REQUIRED_COLUMNS = ["pertanyaan"];
@@ -80,7 +80,7 @@ elements.participantForm.addEventListener("submit", (event) => {
 
   state.participant = {
     fullName: elements.fullName.value.trim(),
-    whatsappNumber: elements.whatsappNumber.value.trim(),
+    whatsappNumber: normalizePhoneForSheet(elements.whatsappNumber.value),
     companyName: elements.companyName.value.trim(),
     domicile: elements.domicile.value.trim(),
     testSession: elements.testSession.value,
@@ -645,6 +645,20 @@ function cleanKey(value) {
 
 function normalizeAnswer(value) {
   return value.trim().toUpperCase().replace(/[^A-E]/g, "").slice(0, 1);
+}
+
+function normalizePhoneForSheet(value) {
+  const digits = String(value || "").replace(/\D/g, "");
+
+  if (digits.startsWith("62")) {
+    return digits.slice(2);
+  }
+
+  if (digits.startsWith("0")) {
+    return digits.slice(1);
+  }
+
+  return digits;
 }
 
 function getAnswerText(question, letter) {

@@ -1,8 +1,18 @@
 const RESPONSE_SHEET_NAME = "jawaban";
 
-function doGet() {
+function doGet(event) {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = getOrCreateResponseSheet_(spreadsheet);
+  const requestedSheetName = event?.parameter?.sheet || RESPONSE_SHEET_NAME;
+  const sheet =
+    requestedSheetName === RESPONSE_SHEET_NAME
+      ? getOrCreateResponseSheet_(spreadsheet)
+      : spreadsheet.getSheetByName(requestedSheetName);
+
+  if (!sheet) {
+    return ContentService.createTextOutput(JSON.stringify({ rows: [] }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
   const rows = sheetToObjects_(sheet);
 
   return ContentService.createTextOutput(JSON.stringify({ rows }))
