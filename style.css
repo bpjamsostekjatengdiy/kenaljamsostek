@@ -371,7 +371,7 @@ a.page-link-accent:hover {
   max-height: 11%;
   overflow: hidden;
   margin: 0;
-  font-size: clamp(1.125rem, 3vw, 2.875rem);
+  font-size: clamp(0.875rem, 2.72vw, 2.625rem);
   font-weight: 950;
   line-height: 1.05;
   padding: 0.04em 0.28em;
