@@ -81,6 +81,10 @@ a.page-link {
   text-decoration: none;
 }
 
+.nav-button {
+  border: 1px solid var(--line);
+}
+
 a.page-link:hover {
   border-color: var(--primary);
   background: var(--primary-soft);
@@ -91,6 +95,41 @@ a.page-link:hover {
   display: grid;
   gap: 10px;
   align-self: start;
+  justify-items: start;
+}
+
+.top-menu-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 10px 30px rgba(28, 39, 66, 0.07);
+}
+
+.top-menu-bar .icon-link {
+  flex: 0 0 auto;
+}
+
+.top-menu-bar .nav-button {
+  width: auto;
+}
+
+.nav-button[data-end-session] {
+  border-color: #ef4444;
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.nav-button[data-end-session]:hover {
+  border-color: #b91c1c;
+  background: #b91c1c;
+  color: #ffffff;
 }
 
 a.page-link-accent {
@@ -107,6 +146,7 @@ a.page-link-accent:hover {
 
 .icon-link {
   width: auto;
+  min-width: 116px;
   min-height: 36px;
   justify-content: flex-start;
   gap: 8px;
@@ -174,6 +214,27 @@ a.page-link-accent:hover {
   height: 13px;
 }
 
+.feedback-icon {
+  position: relative;
+  width: 20px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+}
+
+.feedback-icon::after {
+  position: absolute;
+  right: 3px;
+  bottom: -6px;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  background: inherit;
+  content: "";
+  transform: rotate(45deg);
+}
+
 .certificate-icon {
   position: relative;
   width: 21px;
@@ -191,6 +252,32 @@ a.page-link-accent:hover {
   border-radius: 999px;
   background: currentColor;
   content: "";
+}
+
+.end-session-icon {
+  position: relative;
+  width: 18px;
+  height: 18px;
+}
+
+.end-session-icon::before,
+.end-session-icon::after {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  right: 2px;
+  height: 2px;
+  border-radius: 99px;
+  background: currentColor;
+  content: "";
+}
+
+.end-session-icon::before {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.end-session-icon::after {
+  transform: translateY(-50%) rotate(-45deg);
 }
 
 .certificate-page {
@@ -244,6 +331,7 @@ a.page-link-accent:hover {
   color: #8a4b0d;
   font-size: 0.9rem;
   font-weight: 800;
+  white-space: pre-line;
   margin: 0;
   padding: 10px 12px;
 }
@@ -1506,6 +1594,11 @@ legend {
 
   button {
     width: 100%;
+  }
+
+  .top-menu-bar button,
+  .top-menu-bar .page-link {
+    width: auto;
   }
 
   .text-button {

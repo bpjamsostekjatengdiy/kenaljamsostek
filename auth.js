@@ -58,4 +58,15 @@ function setupLoginForm() {
   });
 }
 
+function setupEndSessionButtons() {
+  document.querySelectorAll("[data-end-session]").forEach((button) => {
+    button.addEventListener("click", () => {
+      sessionStorage.removeItem(ACCESS_SESSION_KEY);
+      sessionStorage.removeItem(ACCESS_EXPIRES_KEY);
+      window.location.href = "./login.html";
+    });
+  });
+}
+
 window.addEventListener("DOMContentLoaded", setupLoginForm);
+window.addEventListener("DOMContentLoaded", setupEndSessionButtons);

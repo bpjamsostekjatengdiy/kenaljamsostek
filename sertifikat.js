@@ -68,11 +68,14 @@ async function generateCertificate() {
   }
 
   const todayKey = getDateKey(new Date());
-  const participant = findParticipantFeedback(phone, todayKey);
+  const participantFeedbackRows = findParticipantFeedbackRows(phone, todayKey);
+  const participant = participantFeedbackRows.find(isBeforeCertificateCutoff);
 
   if (!participant) {
     elements.stage.classList.add("hidden");
-    const message = getMissingFeedbackMessage(phone, todayKey);
+    const message = participantFeedbackRows.length
+      ? getLateFeedbackMessage()
+      : getMissingFeedbackMessage(phone, todayKey);
     showCertificateStatus(message);
     showMessage(message);
     return;
@@ -93,14 +96,30 @@ async function generateCertificate() {
   showMessage("Sertifikat siap dicetak.");
 }
 
-function findParticipantFeedback(phone, dateKey) {
-  return responseRows.find((row) => {
+function findParticipantFeedbackRows(phone, dateKey) {
+  return responseRows.filter((row) => {
     const rowPhone = normalizePhone(row.nomor_wa || row.whatsappNumber);
     const rowSession = getSessionType(row.sesi || row.testSession);
     const rowDate = getDateKey(row.timestamp || row.submittedAt);
 
     return rowPhone === phone && rowSession === "post" && rowDate === dateKey;
   });
+}
+
+function isBeforeCertificateCutoff(row) {
+  const submittedAt = getDateObject(row.timestamp || row.submittedAt);
+
+  if (!submittedAt) {
+    return false;
+  }
+
+  const cutoff = new Date(submittedAt);
+  cutoff.setHours(12, 0, 0, 0);
+  return submittedAt < cutoff;
+}
+
+function getLateFeedbackMessage() {
+  return "Anda terdeteksi melakukan pengisian feedback setelah kegiatan berakhir, sehingga tidak bisa cetak sertifikat.\n\nNantikan episode DIJAMIN berikutnya. Terima kasih";
 }
 
 function getMissingFeedbackMessage(phone, dateKey) {
